@@ -15,8 +15,8 @@ namespace gldr
         if (_serial_interface->available())
         {
             _serial_interface->readBytes(_buffer, buffer_length);
-            _joystick.deserialize(_buffer, 0);
-            //_gyro.deserialize(_buffer, 5);
+            _joystick.deserialize(_buffer, 1);
+            _gyro.deserialize(_buffer, 6);
         }
     }
 

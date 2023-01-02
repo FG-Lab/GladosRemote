@@ -26,7 +26,7 @@ namespace gldr
         JoystickReceiver& _joystick;
         GyroReceiver& _gyro;
 
-        static const int buffer_length = 11;
+        static const int buffer_length = 12;
         uint8_t  _buffer[buffer_length];
     };
 }
