@@ -3,13 +3,30 @@
 
 namespace gldr
 {
-    RemoteTransmitter::RemoteTransmitter(int rx, int tx, JoystickTransmitter& joystickTransmitter, long baud)
+    RemoteTransmitter::RemoteTransmitter(int rx, int tx,
+                                         JoystickTransmitter& joystickTransmitter,
+                                         GyroTransmitter& gyro,
+                                         int interval, long baud)
         : Remote(rx, tx, baud),
-          _joystick(joystickTransmitter)
+          _interval(interval),
+          _elapsed(0),
+          _joystick(joystickTransmitter),
+          _gyro(gyro)
     {}
+
+    void RemoteTransmitter::update()
+    {
+        _joystick.update();
+        _gyro.update();
+    }
 
     void RemoteTransmitter::transmit()
     {
+        if (millis() - _elapsed < _interval) return;
+        _elapsed = millis();
+
+        update();
+
         int len_joystick;
 
         int data_index = 0;
@@ -23,7 +40,6 @@ namespace gldr
         for (int i=0; i<len_joystick; i++) data[i + data_index] = joystick_data[i];
         data_index += len_joystick;
 
-        //_serial_interface->write(125);
         _serial_interface->write(data, complete_length);
     }
 }

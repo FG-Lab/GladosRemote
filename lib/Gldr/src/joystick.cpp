@@ -9,6 +9,8 @@ namespace gldr
     {
         _min = min;
         _max = max;
+        _y_axis = max/2;
+        _x_axis = max/2;
     }
 
     double Joystick::getX()

@@ -2,28 +2,30 @@
 #include "Gldr.h"
 
 
-gldr::JoystickTransmitter joystickTransmitter   = gldr::JoystickTransmitter(8, 3, 2);
-gldr::JoystickReceiver joystickReceiver         = gldr::JoystickReceiver();
-gldr::RemoteTransmitter remoteTransmitter(4, 5, joystickTransmitter);
+auto joystickTransmitter   = gldr::JoystickTransmitter(9, 2, 3);
+auto joystickReceiver      = gldr::JoystickReceiver();
+
+auto gyroTransmitter = gldr::GyroTransmitter();
+
+gldr::RemoteTransmitter remoteTransmitter(4, 5, joystickTransmitter, gyroTransmitter);
 gldr::RemoteReceiver remoteReceiver(2, 3, joystickReceiver);
 
-
-static uint16_t val = 1024;
-
-uint8_t buffer[2];
 
 void setup()
 {
     Serial.begin(9600);
+    gyroTransmitter.setup();
 }
 
 
 void loop()
 {
-    joystickTransmitter.update();
     remoteTransmitter.transmit();
-    delay(50);
     remoteReceiver.update();
 
+    Serial.print(joystickReceiver.getSwitch());
+    Serial.print("\t");
+    Serial.print(joystickReceiver.getX());
+    Serial.print("\t");
     Serial.println(joystickReceiver.getY());
 }

@@ -10,7 +10,7 @@ namespace gldr
     {
         _x_axis = (data[index]   << 8) | data[index+1];
         _y_axis = (data[index+2] << 8) | data[index+3];
-        _switch = (bool)data[index+4];
+        _switch = data[index+4];
     }
 }
 
