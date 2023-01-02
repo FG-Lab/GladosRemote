@@ -20,6 +20,11 @@ namespace gldr
         _gyro.update();
     }
 
+    void RemoteTransmitter::setup()
+    {
+        _gyro.setup();
+    }
+
     void RemoteTransmitter::transmit()
     {
         if (millis() - _elapsed < _interval) return;

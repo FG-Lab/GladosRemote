@@ -14,7 +14,7 @@ gldr::RemoteReceiver remoteReceiver(2, 3, joystickReceiver);
 void setup()
 {
     Serial.begin(9600);
-    gyroTransmitter.setup();
+    remoteTransmitter.setup();
 }
 
 
@@ -23,9 +23,9 @@ void loop()
     remoteTransmitter.transmit();
     remoteReceiver.update();
 
-    Serial.print(joystickReceiver.getSwitch());
+    Serial.print(remoteReceiver.joystick_switch());
     Serial.print("\t");
-    Serial.print(joystickReceiver.getX());
+    Serial.print(remoteReceiver.joystick_x());
     Serial.print("\t");
-    Serial.println(joystickReceiver.getY());
+    Serial.println(remoteReceiver.joystick_y());
 }

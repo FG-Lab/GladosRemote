@@ -12,11 +12,13 @@ namespace gldr
     public:
         RemoteReceiver(int rx, int tx, JoystickReceiver& joystick, long baud=9600);
         void update();
-        void request();
+
+        double joystick_x();
+        double joystick_y();
+        bool joystick_switch();
 
 
     private:
-        bool _ongoing_request;
         JoystickReceiver& _joystick;
     };
 }

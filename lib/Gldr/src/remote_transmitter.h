@@ -16,6 +16,7 @@ namespace gldr
                           GyroTransmitter& gyro,
                           int interval=50, long baud=9600);
         void update();
+        void setup();
         void transmit();
 
     private:
