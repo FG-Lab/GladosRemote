@@ -9,12 +9,12 @@ namespace gldr
         _x_analog = x_analog_pin;
         _y_analog = y_analog_pin;
 
-        pinMode(_switch_pin, INPUT);
+        pinMode(_switch_pin, INPUT_PULLUP);
     }
 
     void JoystickTransmitter::update()
     {
-        _switch = digitalRead(_switch_pin) == HIGH;
+        _switch = digitalRead(_switch_pin) != HIGH;
         _x_axis = analogRead(_x_analog);
         _y_axis = analogRead(_y_analog);
     }
@@ -33,7 +33,7 @@ namespace gldr
         buffer[3] = _y_axis;
 
         // switch
-        buffer[4] = (uint8_t)_switch;
+        buffer[4] = (bool)_switch;
 
         return buffer;
     }

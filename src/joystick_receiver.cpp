@@ -8,9 +8,13 @@ namespace gldr
 
     void JoystickReceiver::deserialize(uint8_t *data, int index)
     {
-        _x_axis = (data[index]   << 8) | data[index+1];
-        _y_axis = (data[index+2] << 8) | data[index+3];
-        _switch = (bool)data[index+4];
+        _x_axis = 0;
+        _y_axis = 0;
+        _switch = false;
+
+        _x_axis = (((uint16_t)data[index])   << 8) | data[index+1];
+        _y_axis = (((uint16_t)data[index+2]) << 8) | data[index+3];
+        _switch = data[index+4];
     }
 }
 

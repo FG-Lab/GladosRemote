@@ -3,33 +3,50 @@
 
 namespace gldr
 {
-    RemoteReceiver::RemoteReceiver(int rx, int tx, JoystickReceiver& joystick, long baud)
+    RemoteReceiver::RemoteReceiver(int rx, int tx, JoystickReceiver& joystick, GyroReceiver& gyro, long baud)
         : Remote(rx, tx, baud),
-          _ongoing_request(false),
-          _joystick(joystick)
+          _joystick(joystick),
+          _gyro(gyro)
     {}
-
-    void RemoteReceiver::request()
-    {
-        if (_ongoing_request) return;
-
-        _ongoing_request = true;
-        _serial_interface->write(125);
-    }
 
     void RemoteReceiver::update()
     {
-        static const int buffer_length = 5;
 
         if (_serial_interface->available())
         {
-            uint8_t  buffer[buffer_length];
-            //_serial_interface->readBytes(buffer, 1);
-
-            //if (buffer[0] != 125) return;
-
-            _serial_interface->readBytes(buffer, buffer_length);
-            _joystick.deserialize(buffer, 0);
+            _serial_interface->readBytes(_buffer, buffer_length);
+            _joystick.deserialize(_buffer, 1);
+            _gyro.deserialize(_buffer, 6);
         }
+    }
+
+    double RemoteReceiver::joystick_x()
+    {
+        return _joystick.getX();
+    }
+
+    double RemoteReceiver::joystick_y()
+    {
+        return _joystick.getY();
+    }
+
+    bool RemoteReceiver::joystick_switch()
+    {
+        return _joystick.getSwitch();
+    }
+
+    double RemoteReceiver::gyro_x()
+    {
+        return _gyro.getX();
+    }
+
+    double RemoteReceiver::gyro_y()
+    {
+        return _gyro.getY();
+    }
+
+    double RemoteReceiver::gyro_z()
+    {
+        return _gyro.getZ();
     }
 }
