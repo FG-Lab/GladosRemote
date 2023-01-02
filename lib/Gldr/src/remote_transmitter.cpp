@@ -33,6 +33,7 @@ namespace gldr
         update();
 
         int len_joystick;
+        int len_gyro;
 
         int data_index = 0;
         int complete_length = 0;
@@ -40,9 +41,15 @@ namespace gldr
         uint8_t* joystick_data = _joystick.serialize(len_joystick);
         complete_length += len_joystick;
 
+        uint8_t* gyro_data = _gyro.serialize(len_gyro);
+        complete_length += len_gyro;
+
         uint8_t data[complete_length];
 
         for (int i=0; i<len_joystick; i++) data[i + data_index] = joystick_data[i];
+        data_index += len_joystick;
+
+        for (int i=0; i<len_gyro; i++) data[i + data_index] = gyro_data[i];
         data_index += len_joystick;
 
         _serial_interface->write(data, complete_length);

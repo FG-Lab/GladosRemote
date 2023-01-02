@@ -6,9 +6,10 @@ auto joystickTransmitter   = gldr::JoystickTransmitter(9, 2, 3);
 auto joystickReceiver      = gldr::JoystickReceiver();
 
 auto gyroTransmitter = gldr::GyroTransmitter();
+auto gyroReceiver    = gldr::GyroReceiver();
 
 gldr::RemoteTransmitter remoteTransmitter(4, 5, joystickTransmitter, gyroTransmitter);
-gldr::RemoteReceiver remoteReceiver(2, 3, joystickReceiver);
+gldr::RemoteReceiver remoteReceiver(2, 3, joystickReceiver, gyroReceiver);
 
 
 void setup()
